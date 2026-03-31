@@ -84,21 +84,25 @@ with c2:
 
 st.info(f"💡 Untuk mencapai {v_knot} Knots, belilah mesin dengan rating kontinu (MCR) minimal **{round(bhp_hp, 1)} HP**.")
 
-# --- GRAFIK ANALISA ---
-st.subheader("📈 Kurva Performansi Kapal")
+# --- GRAFIK ANALISA KECEPATAN ---
+st.subheader("📈 Kurva Hambatan Kapal (Resistance Curve)")
+
 data_grafik = []
 for speed in range(5, 26):
-    _, res_total = kalkulasi_marine(L, B, T, Cb, speed)
-    pwr_eff = res_total * (speed * 0.5144)
-    pwr_bhp = (pwr_eff / total_efficiency) * sea_margin / 0.7457
+    res_frictional, res_total = kalkulasi_marine(L, B, T, Cb, speed)
     data_grafik.append({
-        "Speed (Knots)": speed, 
-        "Hambatan (kN)": round(res_total, 2),
-        "Kebutuhan Mesin (HP)": round(pwr_bhp, 1)
+        "Kecepatan (Knots)": speed, 
+        "Hambatan Total (kN)": round(res_total, 2),
+        "Hambatan Gesek (Rf)": round(res_frictional, 2)
     })
 
-df = pd.DataFrame(data_grafik).set_index("Speed (Knots)")
-st.line_chart(df)
+# Membuat DataFrame
+df_grafik = pd.DataFrame(data_grafik).set_index("Kecepatan (Knots)")
+
+# Menampilkan Line Chart hanya untuk Hambatan
+st.line_chart(df_grafik)
+
+st.caption("Sumbu X: Kecepatan (Knots) | Sumbu Y: Gaya Hambatan (kN)")
 
 # --- FOOTER ---
 st.write("---")
