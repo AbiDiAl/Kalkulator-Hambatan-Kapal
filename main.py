@@ -102,4 +102,4 @@ st.line_chart(df)
 
 # --- FOOTER ---
 st.write("---")
-st.caption("Developed by Marine Digital Engineer | Lulusan Teknik Perkapalan")
+st.caption("Developed by Abi Dimas Alfian & AI | Lulusan Teknik Perkapalan")
